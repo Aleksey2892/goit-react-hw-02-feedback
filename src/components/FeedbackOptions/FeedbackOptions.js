@@ -3,22 +3,22 @@ import s from '../styles.module.scss';
 import PropTypes from 'prop-types';
 
 const FeedbackOptions = ({ options, onLeaveFeedback }) => {
-  const functionHendler = type => {
+  const functionHandler = type => {
     onLeaveFeedback(type);
     options();
   };
 
   return (
     <div className={s.feedbackBox}>
-      <button className={s.button} onClick={() => functionHendler('good')}>
+      <button className={s.button} onClick={() => functionHandler('good')}>
         Good
       </button>
 
-      <button className={s.button} onClick={() => functionHendler('neutral')}>
+      <button className={s.button} onClick={() => functionHandler('neutral')}>
         Neutral
       </button>
 
-      <button className={s.button} onClick={() => functionHendler('bad')}>
+      <button className={s.button} onClick={() => functionHandler('bad')}>
         Bad
       </button>
     </div>
