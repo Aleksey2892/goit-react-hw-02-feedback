@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
-import Statistics from './Statistics';
-
-import s from './styles.module.scss';
+import SectionTitle from './SectionTitle/SectionTitle';
+import Notification from './Notification/Notification';
+import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
+import Statistics from './Statistics/Statistics';
 
 class App extends Component {
   static defaultProps = {
@@ -14,7 +15,7 @@ class App extends Component {
     neutral: this.props.startValue,
     bad: this.props.startValue,
     total: this.props.startValue,
-    posFeedback: this.props.startValue,
+    positivePercentage: this.props.startValue,
   };
 
   addStat = type => {
@@ -38,40 +39,42 @@ class App extends Component {
     this.setState(prevState => {
       const percentage = Math.round(100 / (prevState.total / prevState.good));
       return {
-        posFeedback: percentage,
+        positivePercentage: percentage,
       };
     });
   };
 
-  handleStat = type => {
-    this.addStat(type);
+  moreStatisticsHandler = () => {
     this.countTotalFeedback();
     this.countPositiveFeedbackPercentage();
   };
 
   render() {
+    const { good, neutral, bad, total, positivePercentage } = this.state;
+    const isSwhowStatistics = total > 0;
+
     return (
       <>
-        <div className={s.feedbackBox}>
-          <p className={s.titleFeedback}>Please leave feedback</p>
+        <SectionTitle title={'Please leave feedback'}>
+          <FeedbackOptions
+            options={this.moreStatisticsHandler}
+            onLeaveFeedback={this.addStat}
+          />
+        </SectionTitle>
 
-          <button className={s.button} onClick={() => this.handleStat('good')}>
-            Good
-          </button>
-
-          <button
-            className={s.button}
-            onClick={() => this.handleStat('neutral')}
-          >
-            Neutral
-          </button>
-
-          <button className={s.button} onClick={() => this.handleStat('bad')}>
-            Bad
-          </button>
-        </div>
-
-        <Statistics state={this.state} />
+        <SectionTitle title={'Statistics'}>
+          {isSwhowStatistics ? (
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={total}
+              positivePercentage={positivePercentage}
+            />
+          ) : (
+            <Notification message={'No feedback given'} />
+          )}
+        </SectionTitle>
       </>
     );
   }
