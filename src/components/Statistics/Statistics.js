@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import s from '../styles.module.scss';
 
 const Statistics = ({ ...props }) => {
-  console.log(props);
   const { good, neutral, bad, total, positivePercentage } = props;
 
   return (

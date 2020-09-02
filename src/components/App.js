@@ -14,50 +14,38 @@ class App extends Component {
     good: this.props.startValue,
     neutral: this.props.startValue,
     bad: this.props.startValue,
-    total: this.props.startValue,
-    positivePercentage: this.props.startValue,
   };
 
   addStat = type => {
-    this.setState(prevState => {
-      return {
-        [type]: prevState[type] + 1,
-      };
-    });
+    this.setState(prevState => ({ [type]: prevState[type] + 1 }));
   };
 
   countTotalFeedback = () => {
-    this.setState(prevState => {
-      const totalValue = prevState.good + prevState.neutral + prevState.bad;
-      return {
-        total: totalValue,
-      };
-    });
+    return Object.values(this.state).reduce((acc, value) => acc + value, 0);
   };
 
-  countPositiveFeedbackPercentage = () => {
-    this.setState(prevState => {
-      const percentage = Math.round(100 / (prevState.total / prevState.good));
-      return {
-        positivePercentage: percentage,
-      };
-    });
+  countPositiveFeedbackPercentage = total => {
+    return Math.round(100 / (total / this.state.good));
   };
 
-  moreStatisticsHandler = () => {
-    this.countTotalFeedback();
-    this.countPositiveFeedbackPercentage();
-  };
+  // moreStatisticsHandler = () => {
+  // this.countTotalFeedback();
+  // this.countPositiveFeedbackPercentage();
+  // };
 
   render() {
-    const { good, neutral, bad, total, positivePercentage } = this.state;
+    const { good, neutral, bad } = this.state;
+
+    const total = this.countTotalFeedback();
+    const positivePercentage = this.countPositiveFeedbackPercentage(total);
+
     const isSwhowStatistics = total > 0;
 
     return (
       <>
         <SectionTitle title={'Please leave feedback'}>
           <FeedbackOptions
-            options={this.moreStatisticsHandler}
+            // options={this.moreStatisticsHandler}
             onLeaveFeedback={this.addStat}
           />
         </SectionTitle>

@@ -3,22 +3,24 @@ import s from '../styles.module.scss';
 import PropTypes from 'prop-types';
 
 const FeedbackOptions = ({ options, onLeaveFeedback }) => {
-  const functionHandler = type => {
+  const functionHandler = e => {
+    const type = e.target.textContent.toLowerCase();
+
     onLeaveFeedback(type);
-    options();
+    // options();
   };
 
   return (
     <div className={s.feedbackBox}>
-      <button className={s.button} onClick={() => functionHandler('good')}>
+      <button className={s.button} onClick={functionHandler}>
         Good
       </button>
 
-      <button className={s.button} onClick={() => functionHandler('neutral')}>
+      <button className={s.button} onClick={functionHandler}>
         Neutral
       </button>
 
-      <button className={s.button} onClick={() => functionHandler('bad')}>
+      <button className={s.button} onClick={functionHandler}>
         Bad
       </button>
     </div>
@@ -26,7 +28,7 @@ const FeedbackOptions = ({ options, onLeaveFeedback }) => {
 };
 
 FeedbackOptions.propTypes = {
-  options: PropTypes.func.isRequired,
+  // options: PropTypes.func.isRequired,
   onLeaveFeedback: PropTypes.func.isRequired,
 };
 
