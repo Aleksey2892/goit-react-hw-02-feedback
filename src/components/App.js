@@ -25,7 +25,7 @@ class App extends Component {
   };
 
   countPositiveFeedbackPercentage = total => {
-    return Math.round(100 / (total / this.state.good));
+    return Math.round((this.state.good / total) * 100);
   };
 
   // moreStatisticsHandler = () => {
