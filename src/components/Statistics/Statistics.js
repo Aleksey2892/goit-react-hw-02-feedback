@@ -1,20 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Notification from '../Notification/Notification';
+
 import s from '../styles.module.scss';
 
-const Statistics = ({ ...props }) => {
-  const { good, neutral, bad, total, positivePercentage } = props;
-
+const Statistics = ({
+  good,
+  neutral,
+  bad,
+  total,
+  positivePercentage,
+  isSwhowStatistics,
+}) => {
   return (
     <div className={s.statisticsBox}>
-      <ul className={s.statList}>
-        <li className={s.statItem}>Good: {good}</li>
-        <li className={s.statItem}>Neutral: {neutral}</li>
-        <li className={s.statItem}>Bad: {bad}</li>
-        <li className={s.statItem}>Total: {total}</li>
-        <li className={s.statItem}>Positive feedback: {positivePercentage}%</li>
-      </ul>
+      {isSwhowStatistics && (
+        <ul className={s.statList}>
+          <li className={s.statItem}>Good: {good}</li>
+          <li className={s.statItem}>Neutral: {neutral}</li>
+          <li className={s.statItem}>Bad: {bad}</li>
+          <li className={s.statItem}>Total: {total}</li>
+          <li className={s.statItem}>
+            Positive feedback: {positivePercentage}%
+          </li>
+        </ul>
+      )}
+      {!isSwhowStatistics && <Notification message={'No feedback given'} />}
     </div>
   );
 };
